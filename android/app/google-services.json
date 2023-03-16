@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1007530675191",
+    "project_id": "flutter-video-recorder",
+    "storage_bucket": "flutter-video-recorder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007530675191:android:d48a3461244dc1646cbcf2",
+        "android_client_info": {
+          "package_name": "com.example.untitled"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1007530675191-jbd6lddbfaivhurfqgqubsj1of5sr59p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.untitled",
+            "certificate_hash": "c5c0692706a2bcaf37812d2100095629f1cfc290"
+          }
+        },
+        {
+          "client_id": "1007530675191-hkhal3g8hugbm0701br1p4i61e5ca66q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeV1pIiWvrdkF_RZTYj3tJxexUIrdgzPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007530675191-hkhal3g8hugbm0701br1p4i61e5ca66q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
