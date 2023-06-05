@@ -14,7 +14,14 @@ class myotp extends StatefulWidget {
 
 class _myotpState extends State<myotp> {
   final FirebaseAuth auth = FirebaseAuth.instance;
+  String otp = '123456'; // OTP value to insert
+  TextEditingController otpController = TextEditingController(text: Mylogin.getopt);
+  @override
+  void initState() {
 
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -68,7 +75,7 @@ class _myotpState extends State<myotp> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/img1.png',
+                  'assets/computer.png',
                   width: 150,
                   height: 150,
                 ),
@@ -83,7 +90,7 @@ class _myotpState extends State<myotp> {
                   height: 5,
                 ),
                 Text(
-                  'Please enter your valid phone number here!',
+                  'Please enter your valid OTP here!',
                   style: TextStyle(fontSize: 15),
                 ),
                 SizedBox(
@@ -99,12 +106,14 @@ class _myotpState extends State<myotp> {
                 //   ),
                 // ),
                 Pinput(
+                  controller:otpController ,
                   length: 6,
                   showCursor: true,
                   onChanged: (value) {
                     pincode = value;
                     print(pincode);
                   },
+
                 ),
                 SizedBox(
                   height: 20,
@@ -123,8 +132,14 @@ class _myotpState extends State<myotp> {
 
                         // Sign the user in (or link) with the credential
                         await auth.signInWithCredential(credential);
+
+
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Success'),duration: Duration(seconds: 2),));
+
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>videoplayer()));
+
                       } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('enter valid otp'),duration: Duration(seconds: 2),));
                         print(e);
                         print(pincode);
                       }
@@ -134,7 +149,7 @@ class _myotpState extends State<myotp> {
                       style: TextStyle(color: Colors.white),
                     ),
                     style: TextButton.styleFrom(
-                        backgroundColor: Colors.green.shade500,
+                        backgroundColor: Colors.blue,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                   ),
@@ -143,7 +158,7 @@ class _myotpState extends State<myotp> {
                   children: [
                     TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, "Mylogin");
+                          Navigator.pop(context);
                         },
                         child: Text(
                           "Edit the phone number?",

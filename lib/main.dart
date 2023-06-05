@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:sizer/sizer.dart';
 import 'package:untitled/Myotpscreen.dart';
 import 'package:untitled/fetchvideo_screen.dart';
 import 'package:untitled/phnonelogin.dart';
@@ -20,8 +21,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home:Mylogin()
+    return Sizer(
+        builder: (context, orientation, deviceType){
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+              home:Mylogin()
+          );
+        }
+
     );
   }
 }

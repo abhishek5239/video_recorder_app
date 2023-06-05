@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:untitled/functions_widgets/get_locationfun.dart';
 import 'package:untitled/location.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -59,6 +60,10 @@ FirebaseFirestore db=FirebaseFirestore.instance;
   TextEditingController titletextcnt=TextEditingController();
   TextEditingController desctextcnt=TextEditingController();
   TextEditingController cattextcnt=TextEditingController();
+  String videotitle="";
+String videocat="";
+String videodesc="";
+final formkey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +109,7 @@ FirebaseFirestore db=FirebaseFirestore.instance;
                                   videoPlayerController.seekTo(Duration(
                                       seconds:
                                       videoPlayerController.value.position.inSeconds -
-                                          10));
+                                          3));
                                 },
                                 child: Icon(Icons.rotate_left,size: 30,color: Colors.white,),),
                             ),
@@ -157,7 +162,7 @@ FirebaseFirestore db=FirebaseFirestore.instance;
                                     videoPlayerController.seekTo(Duration(
                                         seconds:
                                         videoPlayerController.value.position.inSeconds +
-                                            10));
+                                            3));
                                   },
                                   child: Icon(Icons.rotate_right,size: 30,color: Colors.white,)),
                             )
@@ -216,120 +221,189 @@ FirebaseFirestore db=FirebaseFirestore.instance;
                       ):Center(child: CircularProgressIndicator(),)],
                     ),
                   SizedBox(height: 10,),
-                  TextField(
-                    controller: titletextcnt,
-                    decoration: InputDecoration(
-                        focusColor: Colors.green,
-                        labelText: "Video Titile",
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
+                  Form(
+                     key: formkey,
+                      child: Column(
+                    children: [
+                     TextFormField(
+
+                       decoration: InputDecoration(
+                         hintText: 'Video Title',
+                         hintStyle: TextStyle(
+                             fontFamily: "Poppins", fontWeight: FontWeight.w500,fontSize: 20,color:Color(0XFFD2D8E8)),
+
+                         filled: true,
+                         fillColor: Color(0XFFD2D8E8).withOpacity(0.3),
+                         contentPadding: EdgeInsets.symmetric(
+                             vertical: 15, horizontal: 10),
+                         border: OutlineInputBorder(
+                           borderRadius: BorderRadius.circular(10),
+                         ),
+                         enabledBorder: OutlineInputBorder(
+                             borderRadius: BorderRadius.circular(10),
+                             borderSide: BorderSide(width: 1,color:Color(0XFFD2D8E8).withOpacity(0.3) )
+                         ),
+                         focusedBorder:OutlineInputBorder(
+                             borderRadius: BorderRadius.circular(10),
+                             borderSide: BorderSide(width: 1,color:Color(0XFFD2D8E8).withOpacity(0.3) )
+                         ),
+                       ),
+                       controller:titletextcnt,
+                       validator: (value){
+                         if(value!.isEmpty)
+                         {
+                           return "Name is empty" ;
+                         }
+                         if(!RegExp(r'^[a-zA-Z]+$').hasMatch(value))
+                         {
+                           return 'Please enter only characters';
+                         }
+                         return null;
+                       },
+                       onSaved: (value){
+                         videotitle=value.toString();
+                       },
+                     ),
+                      SizedBox(height: 10,),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'Video Description',
+                          hintStyle: TextStyle(
+                              fontFamily: "Poppins", fontWeight: FontWeight.w500,fontSize: 20,color:Color(0XFFD2D8E8)),
+
+                          filled: true,
+                          fillColor: Color(0XFFD2D8E8).withOpacity(0.3),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(width: 1,color:Color(0XFFD2D8E8).withOpacity(0.3) )
+                          ),
+                          focusedBorder:OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(width: 1,color:Color(0XFFD2D8E8).withOpacity(0.3) )
+                          ),
                         ),
-                        filled: true,
-                        // floatingLabelBehavior: FloatingLabelBehavior.never,
-                        // fillColor: Colors.lightBlueAccent,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide:
-                            const BorderSide(width: 0, style: BorderStyle.none)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blueAccent),
-                          borderRadius: BorderRadius.circular(10.0),
-                        )),
-                  ),
-                  SizedBox(height: 10,),
-                  TextField(
-                    controller: desctextcnt,
-                    decoration: InputDecoration(
-                        focusColor: Colors.green,
-                        labelText: "Video Description",
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
+                        controller: desctextcnt,
+                        validator: (value){
+                          if(value!.isEmpty)
+                          {
+                            return "Name is empty" ;
+                          }
+                          if(!RegExp(r'^[a-zA-Z]+$').hasMatch(value))
+                          {
+                            return 'Please enter only characters';
+                          }
+                          return null;
+                        },
+                        onSaved: (value){
+                          videodesc=value.toString();
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'Video Category',
+                          hintStyle: TextStyle(
+                              fontFamily: "Poppins", fontWeight: FontWeight.w500,fontSize: 20,color:Color(0XFFD2D8E8)),
+
+                          filled: true,
+                          fillColor: Color(0XFFD2D8E8).withOpacity(0.3),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(width: 1,color:Color(0XFFD2D8E8).withOpacity(0.3) )
+                          ),
+                          focusedBorder:OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(width: 1,color:Color(0XFFD2D8E8).withOpacity(0.3) )
+                          ),
                         ),
-                        filled: true,
-                        // floatingLabelBehavior: FloatingLabelBehavior.never,
-                        // fillColor: Colors.lightBlueAccent,
-                        border: OutlineInputBorder(
+                        controller: cattextcnt,
+                        validator: (value){
+                          if(value!.isEmpty)
+                          {
+                            return "Name is empty" ;
+                          }
+                          if(!RegExp(r'^[a-zA-Z]+$').hasMatch(value))
+                          {
+                            return 'Please enter only characters';
+                          }
+                          return null;
+                        },
+                        onSaved: (value){
+                          videocat=value.toString();
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      loader1==false?TextButton(onPressed: ()async {
+                        setState(() {
+                          loader1=true;
+                          // location=true;
+                          // videolocation=address[0].locality!;
+                        });
+                        Position position=await GetLocation.determinePosition();
+                        List<Placemark> address=await placemarkFromCoordinates(position.latitude, position.longitude);
+                        // print();
+                        setState(() {
+                          loader1=false;
+                          location=true;
+                          videolocation=address[0].locality!;
+                        });
 
-                            borderRadius: BorderRadius.circular(10.0),
+                      }, child:Row(children: [
+                        Icon(Icons.location_on,color: location==true?Colors.green:Colors.blueAccent),
+                        Text(location==false?"Get video location":"Got video location",style: TextStyle(color: location==true?Colors.green:Colors.blueAccent),)
+                      ],)):CircularProgressIndicator(),
+                      SizedBox(height: 20,),
+                      Center(child: TextButton(onPressed: (){
 
-                            borderSide:
-                            const BorderSide(width: 0, style: BorderStyle.none)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blueAccent),
-                          borderRadius: BorderRadius.circular(10.0),
-                        )),
-                  ),
-                  SizedBox(height: 10,),
-                  TextField(
-                    controller: cattextcnt,
-                    decoration: InputDecoration(
-                        focusColor: Colors.green,
-                        labelText: "Video Category",
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
-                        filled: true,
-                        // floatingLabelBehavior: FloatingLabelBehavior.never,
-                        // fillColor: Colors.lightBlueAccent,
-                        border: OutlineInputBorder(
+                        setState(() {
+                          videofile=null;
+                          location=false;
+                          selectvideo=false;
+                        });
+                        if(formkey.currentState!.validate())
+                          {
+                            final data={
+                              "video_category":videocat,
+                              "video_desc":desctextcnt.text,
+                              "video_link":videolnk,
+                              "video_location":videolocation,
+                              "video_title":videotitle
+                            };
+                            db.collection("video_storage").add(data);
+                            setState(() {
 
-                            borderRadius: BorderRadius.circular(10.0),
+                            });
 
-                            borderSide:
-                            const BorderSide(width: 0, style: BorderStyle.none)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blueAccent),
-                          borderRadius: BorderRadius.circular(10.0),
-                        )),
-                  ),
-                  SizedBox(height: 10,),
-                  loader1==false?TextButton(onPressed: ()async {
-                    setState(() {
-                      loader1=true;
-                      // location=true;
-                      // videolocation=address[0].locality!;
-                    });
-                    Position position=await GetLocation.determinePosition();
-                    List<Placemark> address=await placemarkFromCoordinates(position.latitude, position.longitude);
-                    // print();
-                    setState(() {
-                      loader1=false;
-                      location=true;
-                      videolocation=address[0].locality!;
-                    });
+                            QuickAlert.show(context: context, type: QuickAlertType.success);
+                            titletextcnt.clear();
+                            desctextcnt.clear();
+                            cattextcnt.clear();
 
-                  }, child:Row(children: [
-                    Icon(Icons.location_on,color: location==true?Colors.green:Colors.blueAccent),
-                    Text(location==false?"Get video location":"Got video location",style: TextStyle(color: location==true?Colors.green:Colors.blueAccent),)
-                  ],)):CircularProgressIndicator(),
-                  SizedBox(height: 20,),
-                  Center(child: TextButton(onPressed: (){
+                          }
 
-                    setState(() {
-                      videofile=null;
-                      location=false;
-                      selectvideo=false;
-                    });
 
-                    final data={
-                      "video_category":cattextcnt.text,
-                      "video_desc":desctextcnt.text,
-                      "video_link":videolnk,
-                      "video_location":videolocation,
-                      "video_title":titletextcnt.text
-                    };
-                    db.collection("video_storage").add(data);
-                    titletextcnt.clear();
-                    cattextcnt.clear();
-                    desctextcnt.clear();
-                    setState(() {
-                    colorchange=true;
-                    });
+                      }, child: Text("Submit",style: TextStyle(color: Colors.white),),
+                        style: TextButton.styleFrom(backgroundColor: Colors.blue),
+                      )),
 
-                  }, child: Text(colorchange==false?"Submit":"Submitted",style: TextStyle(color: Colors.white),),
-                    style: TextButton.styleFrom(backgroundColor: colorchange==false?Colors.blue:Colors.green),
+                    ],
                   )),
+
+
                   TextButton(onPressed: (){
+                    setState(() {
+                      colorchange=false;
+                    });
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>Getvideo()));
                   }, child: Text("show all videos"))
 

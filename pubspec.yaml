@@ -44,6 +44,8 @@ dependencies:
   geolocator: ^9.0.2
   geocoding: ^2.0.5
   pinput: ^2.2.31
+  quickalert: ^1.0.1
+  sizer: ^2.0.15
 
 dev_dependencies:
   flutter_test:
